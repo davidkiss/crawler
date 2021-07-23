@@ -1,0 +1,35 @@
+spring:
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/crawler"
+    username: crawler
+    password: pwd123
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/changelog-master.xml
+  cloud:
+    function:
+      definition: crawlPage
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+      bindings:
+        crawlPage-in-0:
+          binder: kafka
+          destination: crawlPage3
+          contentType: application/json
+          group: crawler
+          consumer:
+            partitioned: true
+            concurrency: 10
+        crawlPage-out:
+          binder: kafka
+          destination: crawlPage3
+          contentType: application/json
+          producer:
+            partitionCount: 3

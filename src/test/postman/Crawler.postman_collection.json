@@ -1,0 +1,91 @@
+{
+	"info": {
+		"_postman_id": "8b113d9d-63f9-4472-8e7a-02d479674d35",
+		"name": "Crawler",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Start crawling",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"pm.globals.set(\"jobId\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"baseUrl\": \"https://sedna.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/crawlers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"crawlers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crawler Job Stats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/crawlers/{{jobId}}/stats",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"crawlers",
+						"{{jobId}}",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crawler Pages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/crawlers/{{jobId}}/pages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"crawlers",
+						"{{jobId}}",
+						"pages"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
